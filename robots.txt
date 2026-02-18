@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rise-avenue-studio.netlify.app/sitemap.xml
