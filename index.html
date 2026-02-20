@@ -3,17 +3,18 @@
 <head>
     <meta name="google-site-verification" content="1ggUqGHXC9icoyOtJNlbXpcSIwwtpW59CDgjiE0hxCc" />
     <meta charset="UTF-8">
-    <meta name="description" content="Rise Avenue Studio - सरकारी फॉर्म के लिए फोटो और सिग्नेचर रिसाइज करने का बेस्ट टूल।">
+    <meta name="description" content="Rise Avenue Studio - सरकारी फॉर्म के लिए फोटो रिसाइज और रोटेट करने का बेस्ट टूल।">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rise Avenue | Photo Studio Pro</title>
     
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <style>
         /* ========================================= */
-        /* THEME: RISE AVENUE PRO                    */
+        /* THEME: RISE AVENUE PRO (ORIGINAL)         */
         /* ========================================= */
         :root {
             --brand-blue: #0f172a;       
@@ -22,13 +23,11 @@
         }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg-light); color: var(--brand-blue); display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* HEADER */
         header { background: linear-gradient(135deg, #ff512f, #dd2476); color: white; text-align: center; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         header h1 { margin: 0; font-size: 2.2rem; text-transform: uppercase; letter-spacing: 1px; }
         
         .container { max-width: 1200px; margin: 20px auto; padding: 20px; flex: 1; width: 100%; box-sizing: border-box; }
 
-        /* UPLOAD */
         .upload-card {
             background: white; border: 3px dashed var(--brand-orange); padding: 30px;
             text-align: center; border-radius: 15px; cursor: pointer; transition: 0.3s;
@@ -36,7 +35,6 @@
         }
         .upload-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(249,115,22,0.15); }
 
-        /* GALLERY */
         .gallery-strip { display: flex; gap: 15px; overflow-x: auto; padding: 15px 5px; min-height: 110px; }
         .thumb-wrapper { position: relative; display: inline-block; animation: popIn 0.3s; }
         .thumb {
@@ -51,7 +49,6 @@
             font-weight: bold; cursor: pointer; border: 2px solid white; z-index: 10;
         }
 
-        /* EDITOR AREA */
         #editor-workspace { display: none; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 20px; overflow: hidden; }
         .split-view { display: flex; flex-wrap: wrap; border-bottom: 2px solid #eee; }
         
@@ -68,7 +65,6 @@
         .bg-blue { background: var(--brand-blue); }
         .bg-green { background: #22c55e; }
 
-        /* SETTINGS */
         .settings-area { padding: 30px; background: #fff; }
         .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         
@@ -77,7 +73,6 @@
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-weight: 600; }
         .flex-row { display: flex; gap: 5px; align-items: center; }
 
-        /* BUTTONS */
         .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; transition:0.3s; }
         .btn-crop { background: #333; width: auto; padding: 8px 20px; margin-bottom:10px; } 
         .btn-check { background: linear-gradient(to right, #4facfe, #00f2fe); }
@@ -85,7 +80,6 @@
         .btn-down.active { opacity: 1; pointer-events: all; }
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
-        /* MODALS */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
         .modal-box { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; }
         .crop-container { width: 80%; height: 70%; background: #000; margin-bottom: 20px; }
@@ -94,9 +88,10 @@
         .btn-save { background: var(--brand-orange); color: white; }
         .btn-cancel { background: white; color: black; border:1px solid #ccc; }
 
-        /* CLEAN FOOTER */
         footer { margin-top: auto; padding: 20px; background: var(--brand-blue); color: white; text-align: center; border-top: 5px solid var(--brand-orange); font-size: 14px; }
         .footer-link { color: var(--brand-orange); text-decoration: none; font-weight: bold; margin-left: 10px; cursor: pointer; }
+
+        .rotation-controls { margin-bottom: 15px; display: flex; gap: 10px; align-items: center; color: white; }
         
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
@@ -105,15 +100,15 @@
 
     <header>
         <h1>Rise Avenue Photo Studio</h1>
-        <p>Edit, Resize & Convert</p>
+        <p>Edit, Resize & Rotate</p>
     </header>
 
-    <div class="container">
+    <main class="container">
         
         <div class="upload-card" onclick="document.getElementById('filesInput').click()">
             <input type="file" id="filesInput" hidden multiple accept="image/*">
             <span style="font-size:40px;">📂</span>
-            <h3>Select Photos</h3>
+            <h2>Select Photos</h2>
             <p>Support: All Formats</p>
         </div>
 
@@ -122,14 +117,14 @@
         <div id="editor-workspace">
             <div class="split-view">
                 <div class="view-box view-left">
-                    <h4>Original Image</h4>
-                    <div class="img-wrapper"><img id="imgOrg" src=""></div>
-                    <button class="btn btn-crop" onclick="openCropper()">✂️ Manual Crop</button>
+                    <h3>Original Image</h3>
+                    <div class="img-wrapper"><img id="imgOrg" src="" alt="Original"></div>
+                    <button class="btn btn-crop" onclick="openCropper()">✂️ Manual Crop & Rotate</button>
                     <div id="infoOrg" class="badge bg-blue">Upload Image</div>
                 </div>
                 <div class="view-box view-right">
-                    <h4>Final Result</h4>
-                    <div class="img-wrapper"><img id="imgNew" src="" style="opacity:0.5;"></div>
+                    <h3>Final Result</h3>
+                    <div class="img-wrapper"><img id="imgNew" src="" style="opacity:0.5;" alt="Final Result"></div>
                     <div id="infoNew" class="badge bg-green" style="background:#64748b;">Click Apply</div>
                 </div>
             </div>
@@ -144,7 +139,7 @@
                             <select id="kbUnit" style="width:70px;"><option>KB</option><option>MB</option></select>
                         </div>
                         <div class="flex-row" style="margin-top:10px;">
-                            <input type="number" id="wVal" placeholder="W"> <span>:</span> <input type="number" id="hVal" placeholder="H">
+                            <input type="number" id="wVal" placeholder="W" aria-label="Width"> <span>:</span> <input type="number" id="hVal" placeholder="H" aria-label="Height">
                         </div>
                     </div>
 
@@ -173,25 +168,8 @@
                                 <option value="bmp">.bmp</option>
                                 <option value="tiff">.tiff</option>
                             </optgroup>
-                            <optgroup label="Modern / High Efficiency">
-                                <option value="heic">.heic</option>
-                                <option value="heif">.heif</option>
-                                <option value="jpf">.jpf (JPEG 2000)</option>
-                                <option value="jpx">.jpx</option>
-                                <option value="jxl">.jxl</option>
-                            </optgroup>
                             <optgroup label="Vector & Documents">
-                                <option value="svg">.svg</option>
-                                <option value="eps">.eps</option>
                                 <option value="pdf">.pdf</option>
-                            </optgroup>
-                            <optgroup label="RAW Formats">
-                                <option value="raw">.raw</option>
-                                <option value="arw">.arw</option>
-                                <option value="cr2">.cr2</option>
-                                <option value="cr3">.cr3</option>
-                                <option value="rw2">.rw2</option>
-                                <option value="nrw">.nrw</option>
                             </optgroup>
                         </select>
                     </div>
@@ -204,10 +182,15 @@
                 <p id="status" style="text-align:center; font-weight:bold; margin-top:10px; color:#333;"></p>
             </div>
         </div>
-    </div>
+    </main>
 
     <div id="crop-modal" class="modal">
-        <div class="crop-container"><img id="crop-image" src=""></div>
+        <div class="crop-container"><img id="crop-image" src="" alt="Cropper"></div>
+        <div class="rotation-controls">
+            <span>Fine Rotate: </span>
+            <input type="range" id="rotate-slider" min="-180" max="180" value="0" style="width:200px;" oninput="doRotate(this.value)">
+            <span id="rotate-val">0°</span>
+        </div>
         <div class="action-btns">
             <button class="btn-modal btn-cancel" onclick="closeCropper()">Cancel</button>
             <button class="btn-modal btn-save" onclick="saveCrop()">✅ Save</button>
@@ -227,7 +210,7 @@
     </div>
 
     <footer>
-        2026 © All rights reserved - Secure 
+        2026 © Rise Avenue Studio - Secure & Professional
         <span class="footer-link" onclick="document.getElementById('feedback-modal').style.display='flex'">📩 Give Feedback</span>
     </footer>
 
@@ -255,7 +238,7 @@
             files.forEach((f, i) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    gal.innerHTML += `<div class="thumb-wrapper"><div class="thumb ${i===activeIdx?'active':''}" id="t${i}" onclick="loadFile(${i})"><img src="${e.target.result}"></div><span class="delete-btn" onclick="removeFile(event, ${i})">×</span></div>`;
+                    gal.innerHTML += `<div class="thumb-wrapper"><div class="thumb ${i===activeIdx?'active':''}" id="t${i}" onclick="loadFile(${i})"><img src="${e.target.result}" alt="Thumb"></div><span class="delete-btn" onclick="removeFile(event, ${i})">×</span></div>`;
                 };
                 reader.readAsDataURL(f);
             });
@@ -297,17 +280,26 @@
             document.getElementById('status').innerText = "";
         }
 
-        // 3. Cropper
+        // 3. Cropper & Rotation
         function openCropper() {
-            const modal = document.getElementById('crop-modal'); const img = document.getElementById('crop-image');
-            img.src = currentImgSrc; modal.style.display = "flex";
+            document.getElementById('crop-modal').style.display = "flex";
+            const img = document.getElementById('crop-image');
+            img.src = currentImgSrc;
+            document.getElementById('rotate-slider').value = 0;
+            document.getElementById('rotate-val').innerText = "0°";
             if(cropper) cropper.destroy();
             cropper = new Cropper(img, { viewMode:1, autoCropArea:0.8 });
         }
-        function closeCropper() { document.getElementById('crop-modal').style.display = "none"; if(cropper) cropper.destroy(); }
+        function doRotate(val) {
+            if(cropper) {
+                cropper.rotateTo(val);
+                document.getElementById('rotate-val').innerText = val + "°";
+            }
+        }
+        function closeCropper() { document.getElementById('crop-modal').style.display = "none"; }
         function saveCrop() {
             if(!cropper) return;
-            currentImgSrc = cropper.getCroppedCanvas().toDataURL();
+            currentImgSrc = cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.9);
             document.getElementById('imgOrg').src = currentImgSrc;
             closeCropper(); resetPreview();
         }
@@ -319,12 +311,9 @@
             
             img.onload = () => {
                 const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
-                let w = img.width; let h = img.height;
-                const reqW = document.getElementById('wVal').value; const reqH = document.getElementById('hVal').value;
-
-                if (reqW && reqH) { w = parseInt(reqW); h = parseInt(reqH); }
+                let w = document.getElementById('wVal').value || img.width;
+                let h = document.getElementById('hVal').value || img.height;
                 canvas.width = w; canvas.height = h;
-                
                 ctx.drawImage(img, 0, 0, w, h);
 
                 const extVal = document.getElementById('extList').value;
@@ -332,7 +321,6 @@
                 if(extVal === "png") mime = "image/png";
                 if(extVal === "webp") mime = "image/webp";
 
-                // PDF Logic
                 if(extVal === 'pdf') {
                     const { jsPDF } = window.jspdf; const doc = new jsPDF();
                     const imgD = canvas.toDataURL('image/jpeg', 0.95);
@@ -345,14 +333,15 @@
                 if(document.getElementById('kbUnit').value === 'MB') targetKB *= 1024;
 
                 let q = 1.0; let dataUrl = "";
+                // COMMAND FIX: 20 KB के लिए q <= 0.01 तक जाएगा
                 const loop = setInterval(() => {
                     dataUrl = canvas.toDataURL(mime, q);
                     const size = (dataUrl.length * 3/4) / 1024;
-                    if(size <= targetKB || q <= 0.1) {
+                    if(size <= targetKB || q <= 0.01) {
                         clearInterval(loop); processedBlob = dataUrl;
-                        updatePreview(dataUrl, `Size: ${size.toFixed(2)} KB`, size.toFixed(2));
-                    } else { q -= 0.05; }
-                }, 5);
+                        updatePreview(dataUrl, `Final: ${size.toFixed(2)} KB`, size.toFixed(2));
+                    } else { q -= 0.02; }
+                }, 10);
             };
         }
 
@@ -364,24 +353,18 @@
             document.getElementById('dlBtn').innerText = `⬇️ Download (${size} KB)`; document.getElementById('dlBtn').classList.add('active');
         }
 
-        // 5. Download
         function downloadImage() {
             if(!processedBlob) return;
             const file = files[activeIdx];
             let ext = document.getElementById('extList').value;
-            
             if(ext === 'original') {
                 const parts = file.name.split('.');
                 ext = parts[parts.length-1];
             }
-
             const link = document.createElement('a');
             if(ext === 'pdf') link.href = URL.createObjectURL(processedBlob); else link.href = processedBlob;
-            link.download = `RiseAvenue_Edit_${Date.now()}.${ext}`; link.click();
+            link.download = `RiseAvenue_${Date.now()}.${ext}`; link.click();
         }
     </script>
-
 </body>
-
 </html>
-
